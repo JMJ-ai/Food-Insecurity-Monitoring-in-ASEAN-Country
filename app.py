@@ -187,9 +187,14 @@ elif nav == "ML Prediction":
     col1,col2 = st.columns(2)
 
     with col1:
+        styled_predict = prediction_metrics.style.set_properties(**{
+        'background-color': '#262730',  # Dark grey background
+        'color': 'white',               # White text
+        'border-color': 'white'         # Optional: visible borders
+        })
 
         st.subheader("ℹ️ Prediction Model Info")
-        st.dataframe(prediction_metrics)
+        st.dataframe(styled_predict)
 
         st.image(
             "https://i.pinimg.com/originals/bb/88/64/bb88641bbc1dc8e9583ee7029c546eff.gif",
@@ -248,8 +253,14 @@ elif nav == "ML Forecasting":
 
     with col1:
 
+        styled_forecast = forecast_metrics.style.set_properties(**{
+        'background-color': '#262730',  # Dark grey background
+        'color': 'white',               # White text
+        'border-color': 'white'         # Optional: visible borders
+        }) 
+
         st.subheader("ℹ️ Forecasting Model Info")
-        st.dataframe(forecast_metrics)
+        st.dataframe(styled_forecast)
 
         st.image(
             "https://i.pinimg.com/originals/bb/88/64/bb88641bbc1dc8e9583ee7029c546eff.gif",
@@ -261,7 +272,16 @@ elif nav == "ML Forecasting":
         st.subheader("✨ Forecast Tool")
 
         countries = forecast_df["Country_orig"].unique()
-
+        st.markdown("""
+          <style>
+          /* Target the selectbox input area */
+          div[data-baseweb="select"] > div {
+          background-color: #c9ae85 !important;
+          color: white !important;
+          }
+        </style>
+        """, unsafe_allow_html=True)
+        
         country = st.selectbox("Select Country", countries)
         future_year = st.slider("Forecast Year", 2024, 2035)
 
