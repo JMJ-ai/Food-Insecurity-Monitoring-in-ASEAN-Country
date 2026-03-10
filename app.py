@@ -147,15 +147,10 @@ nav = st.radio(
 if nav == "Home":
 
     # SECTION 1 -------------------------------------------------
+    set_background("https://i.pinimg.com/1200x/a3/3c/96/a33c968a4561111e2b4ce37a8d7d3617.jpg")
     st.markdown(
         """
         <style>
-        .section1{
-            background-image: url("https://i.pinimg.com/1200x/a3/3c/96/a33c968a4561111e2b4ce37a8d7d3617.jpg");
-            background-size: cover;
-            padding:60px;
-            border-radius:10px;
-        }
 
         .section2{
             background-image:
