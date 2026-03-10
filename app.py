@@ -69,9 +69,9 @@ def set_background(image_url):
 # -------------------------------------------------
 # LOAD DATA
 # -------------------------------------------------
-@st.cache_resource
+@st.cache_data
 def load_forecast_df():
-    return joblib.load("dataset/forecast_dataset.pkl")
+    return pd.read_csv("dataset/forecast_dataset.csv")
 
 @st.cache_resource
 def load_pipeline():
