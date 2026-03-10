@@ -178,7 +178,7 @@ if nav == "Home":
     st.markdown("""
     <div style="
         background-image:
-        linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)),
+        linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)),
         url('https://static.vecteezy.com/system/resources/thumbnails/013/079/266/small_2x/circle-dot-south-east-asia-map-free-png.png');
         background-size:cover;
         background-position:center;
