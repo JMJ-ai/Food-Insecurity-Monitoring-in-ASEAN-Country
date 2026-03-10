@@ -146,104 +146,126 @@ nav = st.radio(
 # =================================================
 if nav == "Home":
 
-    # SECTION 1 -------------------------------------------------
     set_background("https://i.pinimg.com/1200x/a3/3c/96/a33c968a4561111e2b4ce37a8d7d3617.jpg")
-    st.markdown(
-        """
-        <style>
 
-        .section2{
-            background-image:
-            linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
-            url("https://static.vecteezy.com/system/resources/thumbnails/013/079/266/small_2x/circle-dot-south-east-asia-map-free-png.png");
 
-            background-size: cover;
-            background-position: center;
-            padding: 60px;
-            border-radius:10px;
-            color:white;
-        }
+    # =====================================
+    # SECTION 1 : MAIN TITLE (NO IMAGE)
+    # =====================================
+    st.markdown("""
+    <div style="
+        padding:120px 20px;
+        text-align:center;
+    ">
 
-        .section3{
-            background-color:#a6742e;
-            padding:60px;
-            border-radius:10px;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
+    <h1 style="font-size:90px;color:white;">
+    ASEAN Food Security Monitoring
+    </h1>
 
-    st.markdown('<div class="section1">', unsafe_allow_html=True)
+    <h3 style="color:white;">
+    Machine Learning Forecast & Prediction
+    </h3>
 
-    st.markdown(
-        """
-        <h1 style='text-align:center','font-size:80px;color:white'>
-        ASEAN Food Security Monitoring
-        </h1>
-
-        <h3 style='text-align:center', 'color:white'>
-        Machine Learning Forecast & Prediction
-        </h3>
-        """,
-        unsafe_allow_html=True
-        )
-
-    st.markdown("</div>", unsafe_allow_html=True)
+    </div>
+    """, unsafe_allow_html=True)
 
 
 
-    # SECTION 2 -------------------------------------------------
-    st.markdown('<div class="section2">', unsafe_allow_html=True)
+    # =====================================
+    # SECTION 2 : ABOUT PROJECT
+    # IMAGE + 40% DARK OVERLAY
+    # =====================================
+    st.markdown("""
+    <div style="
+        background-image:
+        linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+        url('https://static.vecteezy.com/system/resources/thumbnails/013/079/266/small_2x/circle-dot-south-east-asia-map-free-png.png');
+        background-size:cover;
+        background-position:center;
+        padding:80px 60px;
+        border-radius:10px;
+        margin-bottom:30px;
+    ">
 
-    st.markdown(
-        """
-        <h2 style='text-align:center'>About This Project</h2>
+    <h2 style="text-align:center;color:white;">
+    About This Project
+    </h2>
 
-        This project is an independent extension of my university group coursework 
-        on predicting food insecurity in ASEAN countries using machine learning.
+    <br>
 
-        The original coursework focused on developing regression models using 
-        FAO and World Bank indicators to predict the prevalence of severe food 
-        insecurity.
+    <p style="color:white;font-size:18px;text-align:center;max-width:900px;margin:auto;">
+    This project is an independent extension of my university group coursework on predicting
+    food insecurity in ASEAN countries using machine learning.
+    </p>
 
-        For my portfolio, I expanded the project into an interactive **Food Security 
-        Monitoring Dashboard** by adding geographic visualization, time-series 
-        forecasting, and feature importance analysis to support policy-oriented insights.
+    <br>
 
-        **Data Sources:**  
-        - <a href="https://data.worldbank.org" target="_blank">World Bank</a>  
-        - <a href="https://www.fao.org/faostat/en/" target="_blank">FAO</a>
-        """,
-        unsafe_allow_html=True
-    )
+    <p style="color:white;font-size:18px;text-align:center;max-width:900px;margin:auto;">
+    The original coursework focused on developing regression models using FAO and World Bank
+    indicators to predict the prevalence of severe food insecurity.
+    </p>
 
-    st.markdown("</div>", unsafe_allow_html=True)
+    <br>
+
+    <p style="color:white;font-size:18px;text-align:center;max-width:900px;margin:auto;">
+    For my portfolio, I expanded the project into an interactive Food Security Monitoring
+    Dashboard by adding geographic visualization, time-series forecasting, and feature
+    importance analysis to support policy-oriented insights.
+    </p>
+
+    <br>
+
+    <p style="text-align:center;color:white;">
+    Data source:
+    <a href="https://data.worldbank.org/" target="_blank" style="color:#FFD700;">World Bank</a>
+    |
+    <a href="https://www.fao.org/faostat/en/#data" target="_blank" style="color:#FFD700;">FAO</a>
+    </p>
+
+    </div>
+    """, unsafe_allow_html=True)
 
 
 
-    # SECTION 3 -------------------------------------------------
-    st.markdown('<div class="section3">', unsafe_allow_html=True)
+    # =====================================
+    # SECTION 3 : PROBLEM STATEMENT
+    # DARK BACKGROUND
+    # =====================================
+    st.markdown("""
+    <div style="
+        background-color:#a6742e;
+        padding:80px 60px;
+        border-radius:10px;
+    ">
 
-    st.markdown(
-        """
-        <h2>Problem Statement</h2>
+    <h2 style="text-align:center;color:white;">
+    Problem Statement
+    </h2>
 
-        Food insecurity remains a critical socioeconomic challenge across 
-        ASEAN countries, affecting population health, economic stability, 
-        and policy planning.
+    <br>
 
-        Governments require **data-driven tools** to monitor trends, identify 
-        key drivers, and anticipate future risk levels. However, existing 
-        analyses are often static and lack predictive capabilities.
+    <p style="color:white;font-size:18px;text-align:center;max-width:900px;margin:auto;">
+    Food insecurity remains a critical socioeconomic challenge across ASEAN countries,
+    affecting population health, economic stability, and policy planning.
+    </p>
 
-        This project develops a **machine learning–based monitoring and 
-        forecasting system** to support early detection and policy intervention.
-        """,
-        unsafe_allow_html=True
-    )
+    <br>
 
-    st.markdown("</div>", unsafe_allow_html=True)
+    <p style="color:white;font-size:18px;text-align:center;max-width:900px;margin:auto;">
+    Governments require data-driven tools to monitor trends, identify key drivers,
+    and anticipate future risk levels. However, existing analyses are often static
+    and lack predictive capabilities.
+    </p>
+
+    <br>
+
+    <p style="color:white;font-size:18px;text-align:center;max-width:900px;margin:auto;">
+    This project develops a machine learning–based monitoring and forecasting system
+    to support early detection and policy intervention.
+    </p>
+
+    </div>
+    """, unsafe_allow_html=True)
 
 # =================================================
 # DASHBOARD
