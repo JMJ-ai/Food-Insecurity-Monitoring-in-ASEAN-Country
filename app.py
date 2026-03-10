@@ -177,13 +177,21 @@ if nav == "Home":
     # =====================================
     st.markdown("""
     <div style="
+        width:100vw;
+        margin-left:calc(-50vw + 50%);
         background-image:
         linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)),
         url('https://static.vecteezy.com/system/resources/thumbnails/013/079/266/small_2x/circle-dot-south-east-asia-map-free-png.png');
         background-size:cover;
         background-position:center;
-        padding:0px 0px;
-        border-radius:0px;
+        
+    ">
+
+    <div style="
+        max-width:1000px;
+        margin:auto;
+        padding:80px 20px;
+        text-align:center;
     ">
 
     <h2 style="text-align:center;color:white;">
@@ -232,9 +240,16 @@ if nav == "Home":
     # =====================================
     st.markdown("""
     <div style="
+        width:100vw;
+        margin-left:calc(-50vw + 50%);
         background-color:#a6742e;
-        padding:80px 60px;
-        border-radius:0px;
+    ">
+
+    <div style="
+        max-width:1000px;
+        margin:auto;
+        padding:80px 20px;
+        text-align:center;
     ">
 
     <h2 style="text-align:center;color:white;">
