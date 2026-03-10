@@ -311,13 +311,13 @@ elif nav == "ML Prediction":
             columns=["Metric", "Value"]
         )
 
-        style_df = df_metrics.style.format({"Value": "{:.3f}"}).set_table_styles(
+        style_df = df_metrics.style.set_table_styles(
         [
             {'selector': 'th',
-             'props': [('background-color', '#111827'), ('color', 'white')]},
+             'props': [('background-color', '#111827'), ('color', 'black')]},
 
             {'selector': 'td',
-             'props': [('background-color', '#1f2937'), ('color', 'white')]}
+             'props': [('background-color', '#1f2937'), ('color', 'black')]}
         ])
 
         st.dataframe(style_df)
