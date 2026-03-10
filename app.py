@@ -71,7 +71,7 @@ def set_background(image_url):
 # -------------------------------------------------
 @st.cache_resource
 def load_forecast_df():
-    return joblib.load("dataset/forecast_features.pkl")
+    return joblib.load("dataset/forecast_dataset.pkl")
 
 @st.cache_resource
 def load_pipeline():
