@@ -159,7 +159,7 @@ if nav == "Home":
     ">
 
     <h1 style="font-size:90px;color:white;">
-    ASEAN Food Security Monitoring
+    ASEAN Food Insecurity Monitoring
     </h1>
 
     <h3 style="color:white;">
@@ -182,9 +182,9 @@ if nav == "Home":
         background-image:
         linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)),
         url('https://static.vecteezy.com/system/resources/thumbnails/013/079/266/small_2x/circle-dot-south-east-asia-map-free-png.png');
+        background-color:#232423;
         background-size:cover;
-        background-position:center;
-        
+        background-position:center;    
     ">
 
     <div style="
