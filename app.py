@@ -296,7 +296,7 @@ elif nav == "Dashboard":
 # =================================================
 elif nav == "ML Prediction":
 
-    set_background(""https://64.media.tumblr.com/7e5be0b460f1404bfbf24807efa95f04/5bdfeadfc689526d-6d/s400x600/a87a377cee60d959ae9560c588ec691a2da470db.gif")
+    set_background("https://64.media.tumblr.com/7e5be0b460f1404bfbf24807efa95f04/5bdfeadfc689526d-6d/s400x600/a87a377cee60d959ae9560c588ec691a2da470db.gif")
 
     st.title("Food Insecurity Prediction")
 
