@@ -334,12 +334,64 @@ elif nav == "Methodology":
 # -------------------------------------------------
 # FOOTER
 # -------------------------------------------------
-st.markdown(
-"""
-<hr>
-<center>
+footer_html = """
+<style>
+
+.footer {
+position: relative;
+left: 0;
+bottom: 0;
+width: 100%;
+background-color: transparent;
+color: white;
+text-align: center;
+padding: 20px 0;
+font-size: 14px;
+z-index: 9999;
+}
+
+.footer a {
+margin: 0 10px;
+text-decoration: none;
+}
+
+.footer img {
+width: 28px;
+margin-left: 8px;
+margin-right: 8px;
+vertical-align: middle;
+transition: transform 0.2s;
+}
+
+.footer img:hover {
+transform: scale(1.2);
+}
+
+</style>
+
+<div class="footer">
+
+<p>
 Built with Data & Passion | © 2026 Jenifer M Jues
-</center>
-""",
-unsafe_allow_html=True
-)
+</p>
+
+<a href="https://github.com/JMJ-ai/Fraud-Analytic-and-ML-Detection" target="_blank">
+<img src="https://cdn-icons-png.flaticon.com/512/25/25231.png">
+</a>
+
+<a href="https://www.linkedin.com/in/jenifermayangjues/" target="_blank">
+<img src="https://cdn-icons-png.flaticon.com/512/174/174857.png">
+</a>
+
+<a href="https://icons8.com/" target="_blank">
+<img src="https://img.icons8.com/?size=100&id=ayJDJ6xQKgM6&format=png&color=000000">
+</a>
+
+<a href="mailto:jeniferjues@gmail.com">
+<img src="https://cdn-icons-png.flaticon.com/512/732/732200.png">
+</a>
+
+</div>
+"""
+
+st.markdown(footer_html, unsafe_allow_html=True)
