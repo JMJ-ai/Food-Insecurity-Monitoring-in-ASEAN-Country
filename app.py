@@ -69,13 +69,9 @@ def set_background(image_url):
 # -------------------------------------------------
 # LOAD DATA
 # -------------------------------------------------
-@st.cache_data
-def load_pred_data():
-    return pd.read_csv("dataset/fi_df.csv")
-
-@st.cache_data
-def load_forecast_data():
-    return pd.read_csv("dataset/forecast_df.csv")
+@st.cache_resource
+def load_forecast_df():
+    return joblib.load("dataset/forecast_features.pkl")
 
 @st.cache_resource
 def load_pipeline():
@@ -104,8 +100,7 @@ def load_forecast_metrics():
 # -------------------------------------------------
 # LOAD EVERYTHING
 # -------------------------------------------------
-prediction_df = load_pred_data()
-forecast_df = load_forecast_data()
+forecast_df = load_forecast_df()
 
 prediction_model = load_pipeline()
 forecast_model = load_forecast_model()
