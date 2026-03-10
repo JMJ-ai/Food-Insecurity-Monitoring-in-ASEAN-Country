@@ -1,51 +1,129 @@
 import streamlit as st
 import pandas as pd
-import plotly.express as px
+import numpy as np
 import joblib
-from utils.preprocess import preprocess_input
+import plotly.express as px
 
-# =====================================================
+# -------------------------------------------------
 # PAGE CONFIG
-# =====================================================
+# -------------------------------------------------
 st.set_page_config(
     page_title="ASEAN Food Security Monitoring",
     layout="wide"
 )
-# =====================================================
+
+# -------------------------------------------------
+# BACKGROUND FUNCTION
+# -------------------------------------------------
+def set_background(image_url):
+    st.markdown(
+        f"""
+        <style>
+        .stApp {{
+            background-image: url("{image_url}");
+            background-size: cover;
+            background-attachment: fixed;
+        }}
+
+        header {{visibility: hidden;}}
+        footer {{visibility: hidden;}}
+
+        .block-container {{
+            padding-top: 0rem !important;
+            padding-bottom: 0rem !important;
+        }}
+
+        div[role="radiogroup"] > label > div:first-child {{
+            display:none !important;
+        }}
+
+        div[role="radiogroup"] {{
+            gap:30px;
+            justify-content:center;
+        }}
+
+        div[role="radiogroup"] label {{
+            background:none !important;
+            border:none !important;
+            padding:0 !important;
+            cursor:pointer;
+        }}
+
+        div[role="radiogroup"] label div {{
+            color:rgba(255,255,255,0.7)!important;
+            font-size:18px!important;
+        }}
+
+        div[role="radiogroup"] label:hover div,
+        div[role="radiogroup"] label:has(input:checked) div {{
+            color:white!important;
+            font-weight:bold!important;
+            text-decoration:underline;
+            text-underline-offset:8px;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+# -------------------------------------------------
 # LOAD DATA
-# =====================================================
+# -------------------------------------------------
 @st.cache_data
-def load_eda_data():
-    return pd.read_csv("dataset/eda_df.csv")
+def load_pred_data():
+    return pd.read_csv("dataset/fi_df.csv")
 
 @st.cache_data
-def load_model_df_data():
-    return pd.read_csv("dataset/model_df.csv")
+def load_forecast_data():
+    return pd.read_csv("dataset/forecast_df.csv")
 
 @st.cache_resource
-def load_prediction_model():
-    return joblib.load("models/prediction/food_model.pkl")
+def load_pipeline():
+    return joblib.load("models/prediction/pred_pipeline.pkl")
 
-df = load_eda_data()
-model_df = load_model_df_data()
-prediction_model = load_prediction_model()
+@st.cache_resource
+def load_forecast_model():
+    return joblib.load("models/forecast/rf_forecast_model.pkl")
 
-# =====================================================
-# TABLEAU PATHS
-# Replace with your real workbook + dashboard names
-# Example: views/ASEANFoodSecurity/Overview
+@st.cache_resource
+def load_forecast_features():
+    return joblib.load("models/forecast/forecast_feature_columns.pkl")
+
+@st.cache_resource
+def load_feature_columns():
+    return joblib.load("models/prediction/feature_columns.pkl")
+
+@st.cache_resource
+def load_prediction_metrics():
+    return joblib.load("models/prediction/prediction_metrics.pkl")
+
+@st.cache_resource
+def load_forecast_metrics():
+    return joblib.load("models/forecast/forecast_metrics.pkl")
+
+# -------------------------------------------------
+# LOAD EVERYTHING
+# -------------------------------------------------
+prediction_df = load_pred_data()
+forecast_df = load_forecast_data()
+
+prediction_model = load_pipeline()
+forecast_model = load_forecast_model()
+
+feature_columns = load_feature_columns()
+forecast_features = load_forecast_features()
+
+prediction_metrics = load_prediction_metrics()
+forecast_metrics = load_forecast_metrics()
+
 # =====================================================
 TABLEAU_PATHS = {
-    "Overview Dashboard": "views/FoodInsecurityRateDashboard/OverviewDashboard",
-    "Driver Analysis": "views/FoodInsecurityRateDashboard/DriverAnalysis",
-    "Forecasting": "views/FoodInsecurityRateDashboard/Forecasting",
-    "Insights": "views/FoodInsecurityRateDashboard/Insights"
+    "Overview": "views/FoodInsecurityRateDashboard/Overview"
 }
-
 # =====================================================
 # SAFE TABLEAU EMBED FUNCTION
 # =====================================================
-def embed_tableau(path, height=700):
+def embed_tableau(path, height=650):
     html_code = f"""
     <script type='module' src='https://public.tableau.com/javascripts/api/tableau.embedding.3.latest.min.js'></script>
     <tableau-viz
@@ -58,238 +136,205 @@ def embed_tableau(path, height=700):
     """
     st.components.v1.html(html_code, height=height)
 
-# =====================================================
-# HEADER
-# =====================================================
-st.image("assets/Header.png", use_container_width=True)
-st.title("ASEAN Food Security Monitoring Dashboard")
-
-# =====================================================
-# SIDEBAR
-# =====================================================
-page = st.sidebar.radio(
-    "Navigation",
-    ["Overview Dashboard",
-     "Driver Analysis",
-     "Forecasting",
-     "Insights"]
+# -------------------------------------------------
+# NAVIGATION
+# -------------------------------------------------
+nav = st.radio(
+    "",
+    ["Home","Dashboard","ML Prediction","ML Forecasting","Methodology"],
+    horizontal=True,
+    label_visibility="collapsed"
 )
 
-st.components.v1.html("""
-<script>
-window.scrollTo({top: 0, behavior: 'smooth'});
-</script>
-""", height=0, width=0)
+# =================================================
+# HOME
+# =================================================
+if nav == "Home":
 
-# =====================================================
-# PAGE 1 — OVERVIEW
-# =====================================================
-if page == "Overview Dashboard":
+    set_background("https://i.pinimg.com/736x/cb/38/21/cb3821211ff00fb8456a24467e709004.jpg")
 
-    st.header("Overview Dashboard")
-
-    st.markdown("""
-    This dashboard provides a high-level overview of food insecurity trends
-    across ASEAN countries including country comparison and historical patterns.
-    """)
-
-    st.divider()
-
-    # KPI Cards
-    col1, col2, col3 = st.columns(3)
-
-    col1.metric("Average Food Insecurity",
-                round(df["Food Insecurity Rate"].mean(), 2))
-
-    col2.metric("Highest Country",
-                df.groupby("Area")["Food Insecurity Rate"].mean().idxmax())
-
-    col3.metric("Lowest Country",
-                df.groupby("Area")["Food Insecurity Rate"].mean().idxmin())
-
-    st.divider()
-
-    # Python Trend
-    st.subheader("Trend by Country")
-    fig = px.line(df, x="Year", y="Food Insecurity Rate", color="Area")
-    st.plotly_chart(fig, use_container_width=True)
-
-    st.divider()
-
-    # Tableau
-    st.subheader("Interactive Tableau Dashboard")
-    embed_tableau(TABLEAU_PATHS["Overview Dashboard"])
-
-# =====================================================
-# PAGE 2 — DRIVER ANALYSIS
-# =====================================================
-elif page == "Driver Analysis":
-
-    st.header("Driver Analysis")
-
-    st.markdown("""
-    ## 🔍 Prediction Model Overview
-
-    The prediction model was built using **Random Forest Regressor** 
-    after comparing multiple algorithms.
-
-    ### Why Random Forest?
-    - Achieved highest model performance
-    - Average Cross-Validation Score: **0.95**
-    - Captures nonlinear relationships
-    - Reduces overfitting via ensemble learning
-
-    ### Feature Selection
-    Selected features were determined through:
-    - Importance ranking
-    - Performance validation
-    - Multicollinearity reduction
-
-    The model predicts the **Food Insecurity Rate**
-    using economic, agricultural, and infrastructure indicators.
-    """)
-
-    st.divider()
-
-    # Feature Importance
-    st.subheader("Feature Importance")
-    try:
-        fi = pd.read_csv("dataset/feature_importance.csv")
-        fig = px.bar(fi, x="Importance", y="Feature", orientation="h")
-        st.plotly_chart(fig, use_container_width=True)
-    except:
-        st.info("Feature importance file not found.")
-
-    st.divider()
-
-    # Prediction Tool
-    st.subheader("Food Insecurity Prediction Tool")
-    col1, col2 = st.columns(2)
+    col1,col2 = st.columns([1,2])
 
     with col1:
-        avg_food_value = st.number_input("Food Production Value", 0.0, 5000.0, 1000.0)
-        cereal_import = st.number_input("Cereal Import (%)", 0.0, 100.0, 30.0)
-        caloric_losses = st.number_input("Caloric Losses (%)", 0.0, 100.0, 10.0)
-        food_prod_var = st.number_input("Food Production Variability", 0.0, 500.0, 50.0)
-        food_supply_var = st.number_input("Food Supply Variability", 0.0, 500.0, 50.0)
+        st.image("https://simplyadtype.wordpress.com/wp-content/uploads/2020/09/gif-1.gif",use_container_width=True)
 
     with col2:
-        irrigation_land = st.number_input("Irrigation (%)", 0.0, 100.0, 40.0)
-        water_access = st.number_input("Water Access (%)", 0.0, 100.0, 70.0)
-        sanitation = st.number_input("Sanitation (%)", 0.0, 100.0, 70.0)
-        political_stability = st.number_input("Political Stability", -3.0, 3.0, 0.0)
-        cpi = st.number_input("Consumer Price Index", 0.0, 300.0, 120.0)
+        st.markdown("""
+        <h1 style='font-size:60px;color:white'>ASEAN Food Security Monitoring</h1>
+        <h3 style='color:white'>Machine Learning Forecast & Prediction</h3>
+        """,unsafe_allow_html=True)
 
-    if st.button("Predict Food Insecurity"):
+# =================================================
+# DASHBOARD
+# =================================================
+elif nav == "Dashboard":
 
-        user_input = {
-            "Food Production Value": avg_food_value,
-            "Cereal Import (%)": cereal_import,
-            "Caloric Losses (%)": caloric_losses,
-            "Food Production Variability": food_prod_var,
-            "Food Supply Variability": food_supply_var,
-            "Irrigation (%)": irrigation_land,
-            "Water Access (%)": water_access,
-            "Sanitation (%)": sanitation,
-            "Political Stability": political_stability,
-            "CPI": cpi
-        }
+    set_background("https://i.pinimg.com/1200x/78/1d/4c/781d4c6becbd05f20e26057f6cbaf9bc.jpg")
 
-        input_df = preprocess_input(user_input)
-        prediction = prediction_model.predict(input_df)
+    st.title("Food Security Dashboard")
+    embed_tableau(TABLEAU_PATHS["Overview"])
 
-        st.success(f"Predicted Food Insecurity Rate: {prediction[0]:.2f}")
+# =================================================
+# ML PREDICTION
+# =================================================
+elif nav == "ML Prediction":
 
-    st.divider()
+    set_background("https://i.pinimg.com/originals/7d/f1/43/7df143904208d2295c8428caaf86cb3c.gif")
 
-    # Tableau
-    st.subheader("Interactive Driver Dashboard")
-    embed_tableau(TABLEAU_PATHS["Driver Analysis"])
+    st.title("Food Insecurity Prediction")
 
-# =====================================================
-# PAGE 3 — FORECASTING
-# =====================================================
-elif page == "Forecasting":
+    col1,col2 = st.columns(2)
 
-    st.header("Forecasting")
+    with col1:
 
-    st.markdown("""
-    ## 📈 Forecasting Model Overview
+        st.subheader("ℹ️Prediction Model Info")
+	st.write("Algorithm:",config["model"]["algorithm_predict"])
+        st.dataframe(prediction_metrics)
 
-    Forecasting was conducted using **Facebook Prophet**.
+	url = "https://i.pinimg.com/originals/bb/88/64/bb88641bbc1dc8e9583ee7029c546eff.gif"
+        st.image(url, width=500)
 
-    ### Why Prophet?
-    - Designed for business and policy forecasting
-    - Captures trend changes effectively
-    - Works well with yearly time-series data
-    - Robust to missing values and outliers
-    - Provides confidence intervals
+    with col2:
 
-    Prophet was selected due to its interpretability and 
-    stable forecasting performance across ASEAN countries.
-    """)
+        st.subheader("✨Prediction Tool ")
 
-    st.divider()
+        user_inputs = {}
+   	errors = False
 
-    country = st.selectbox(
-        "Select Country",
-        model_df["Country"].unique()
-    )
+   	for feature in feature_columns:
+    
+    		value = st.text_input(feature)
 
-    try:
-        prophet_model = joblib.load(
-            f"models/forecast/{country}_prophet.pkl"
-        )
+    		if value != "":
+        		try:
+            		  	user_inputs[feature] = float(value)
+        		except ValueError:
+            			st.error(f"⚠️ '{feature}' must be a numeric value.")
+            			errors = True
+    		else:
+       			 user_inputs[feature] = None
 
-        future = prophet_model.make_future_dataframe(periods=5, freq="YS")
-        forecast = prophet_model.predict(future)
+        if st.button("Predict"):
+		
+	    if errors:
+        	    st.warning("Please correct the invalid inputs before prediction.")
 
-        st.subheader("Forecast Trend")
-        fig = px.line(forecast, x="ds", y="yhat")
-        st.plotly_chart(fig, use_container_width=True)
+                     elif None in user_inputs.values():
+        	    st.warning("Please fill in all input fields.")
 
-        st.subheader("Confidence Interval")
-        fig2 = px.line(forecast, x="ds",
-                       y=["yhat_lower", "yhat_upper"])
-        st.plotly_chart(fig2, use_container_width=True)
+                      else:
+        
 
-        forecast["growth"] = forecast["yhat"].pct_change() * 100
-        st.subheader("Projected Growth Rate (%)")
-        fig3 = px.line(forecast, x="ds", y="growth")
-        st.plotly_chart(fig3, use_container_width=True)
+            input_df = pd.DataFrame([user_inputs])
+            input_df = input_df[feature_columns]
 
-    except:
-        st.warning("Forecast model not available.")
+            prediction = prediction_model.predict(input_df)[0]
 
-    st.divider()
+            st.success(f"Predicted Food Insecurity Rate: {prediction:.2f}")
 
-    # Tableau
-    st.subheader("Interactive Forecast Dashboard")
-    embed_tableau(TABLEAU_PATHS["Forecasting"])
+# =================================================
+# ML FORECASTING
+# =================================================
+elif nav == "ML Forecasting":
 
-# =====================================================
-# PAGE 4 — INSIGHTS
-# =====================================================
-elif page == "Insights":
+    set_background("https://i.pinimg.com/originals/7d/f1/43/7df143904208d2295c8428caaf86cb3c.gif")
 
-    st.header("Strategic Insights")
+    st.title("Food Insecurity Forecast")
 
-    st.markdown("""
-    ## Key Findings
+    col1,col2 = st.columns(2)
 
-    - Infrastructure access significantly reduces food insecurity  
-    - Water and sanitation are major structural drivers  
-    - Import dependency increases vulnerability  
-    - Forecasting enables proactive planning  
+    with col1:
 
-    ## Policy Recommendations
+        st.subheader("("ℹ️Forecasting  Model Info"")
+	st.write("Algorithm:",config["model"]["algorithm_forecast"])
+        st.dataframe(forecast_metrics)
 
-    - Strengthen irrigation systems  
-    - Improve rural water access  
-    - Reduce food import dependency  
-    - Monitor food price volatility  
-    """)
+	url =  "https://i.pinimg.com/originals/bb/88/64/bb88641bbc1dc8e9583ee7029c546eff.gif"
+        st.image(url, width=500)
 
-    st.divider()
+    with col2:
 
-    embed_tableau(TABLEAU_PATHS["Insights"])
+        st.subheader("✨Forecast Tool")
+
+        countries = forecast_df["Country_orig"].unique()
+
+        country = st.selectbox("Select Country", countries)
+        future_year = st.slider("Forecast Year",2024,2035)
+
+        country_data = forecast_df[forecast_df["Country_orig"] == country]
+
+        last_row = country_data.iloc[-1]
+        prev_row = country_data.iloc[-2]
+
+        lag1 = last_row["Food Insecurity Rate"]
+        lag2 = prev_row["Food Insecurity Rate"]
+
+        water_lag1 = last_row["water access"]
+        water_lag2 = prev_row["water access"]
+
+        rolling_mean = country_data["Food Insecurity Rate"].tail(3).mean()
+
+        time_index = future_year - forecast_df["Year"].min()
+
+        input_data = pd.DataFrame(0,index=[0],columns=forecast_features)
+
+        input_data["Food Insecurity Rate_lag1"] = lag1
+        input_data["Food Insecurity Rate_lag2"] = lag2
+        input_data["water access_lag1"] = water_lag1
+        input_data["water access_lag2"] = water_lag2
+        input_data["food_insecurity_roll3"] = rolling_mean
+        input_data["time_index"] = time_index
+        input_data["water access"] = last_row["water access"]
+
+        country_col = f"Country_orig_{country}"
+
+        if country_col in input_data.columns:
+            input_data[country_col] = 1
+
+        if st.button("Generate Forecast"):
+
+            prediction = forecast_model.predict(input_data)[0]
+
+            st.success(f"Forecast Food Insecurity Rate: {prediction:.2f}")
+
+            chart_df = country_data[["Year","Food Insecurity Rate"]].copy()
+
+            forecast_point = pd.DataFrame({
+                "Year":[future_year],
+                "Food Insecurity Rate":[prediction]
+            })
+
+            chart_df = pd.concat([chart_df,forecast_point])
+
+            fig = px.line(
+                chart_df,
+                x="Year",
+                y="Food Insecurity Rate",
+                title=f"{country} Forecast"
+            )
+
+            st.plotly_chart(fig)
+
+# =================================================
+# METHODOLOGY
+# =================================================
+elif nav == "Methodology":
+
+    set_background("https://i.pinimg.com/1200x/78/1d/4c/781d4c6becbd05f20e26057f6cbaf9bc.jpg")
+
+    st.title("Project Methodology")
+
+    st.image("assets/flowchart.png",width=800)
+
+# -------------------------------------------------
+# FOOTER
+# -------------------------------------------------
+st.markdown(
+"""
+<hr>
+<center>
+Built with Data & Passion | © 2026 Jenifer M Jues
+</center>
+""",
+unsafe_allow_html=True
+)
