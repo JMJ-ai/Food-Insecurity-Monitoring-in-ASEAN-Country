@@ -1,4 +1,10 @@
 model:
-  algorithm_predict: Random Forest Regresssor
-  algorithm_forecast: Random Forest Regresssor
-  
+  algorithm_pred: Random Forest Regressor
+  r_square_score: 0.95
+  rmse: 0.80
+  avg_CV_score: 0.96
+
+  algorithm_forecast: Random Forest
+  MAE: 0.55
+  rmse_forecast: 0.75
+  MAPE: 17.73
