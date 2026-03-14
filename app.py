@@ -300,45 +300,45 @@ elif nav == "Dashboard":
 elif nav == "ML Prediction":
 
     st.markdown("""
-    <style>
+<style>
 
-    /* MAIN DASHBOARD CONTAINER */
-    .st-key-main_container{
-        padding:30px;
-        border-radius:15px;
-        backdrop-filter: blur(6px);
-    }
+/* MAIN DASHBOARD CONTAINER */
+.st-key-main_container{
+    padding:30px;
+    border-radius:15px;
+    backdrop-filter: blur(6px);
+}
 
-    /* SIDEBAR PANEL */
-    .st-key-sidebar{
-        background-color:#062906;
-        padding:25px;
-        border-radius:12px;
-        min-height:450px;
-        color:white;
-    }
+/* SIDEBAR PANEL */
+.st-key-sidebar{
+    background-color:#062906;
+    padding:25px;
+    border-radius:12px;
+    min-height:450px;
+    color:white;
+}
 
-    /* MAIN CONTENT PANEL */
-    .st-key-mainpanel{
-        background-color:rgba(0,0,0,0);
-        padding:25px;
-        border-radius:12px;
-        min-height:450px;
-        color:white;
-    }
+/* MAIN CONTENT PANEL */
+.st-key-mainpanel{
+    background-color:rgba(0,0,0,0);
+    padding:25px;
+    border-radius:12px;
+    min-height:450px;
+    color:white;
+}
 
-    /* subtle card for results */
-    .result-card{
-        background:rgba(255,255,255,0.08);
-        padding:20px;
-        border-radius:12px;
-        border:1px solid rgba(255,255,255,0.15);
-        font-size:22px;
-        text-align:center;
-    }
+/* subtle card for results */
+.result-card{
+    background:rgba(255,255,255,0.08);
+    padding:20px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,0.15);
+    font-size:22px;
+    text-align:center;
+}
 
-    </style>
-    """, unsafe_allow_html=True)
+</style>
+""", unsafe_allow_html=True)
 
     set_background("https://64.media.tumblr.com/7e5be0b460f1404bfbf24807efa95f04/5bdfeadfc689526d-6d/s400x600/a87a377cee60d959ae9560c588ec691a2da470db.gif")
 
@@ -353,9 +353,10 @@ elif nav == "ML Prediction":
         # =========================
         with sidebar:
             with st.container(key="sidebar"):
-            
+
                 st.image("https://i.pinimg.com/1200x/68/fd/7b/68fd7b646d8f0b18ab50204dd32c807f.jpg")
                 st.write("Fill details below to predict crop production")
+
                 user_inputs = {}
                 errors = False
 
@@ -371,8 +372,9 @@ elif nav == "ML Prediction":
                             errors = True
                     else:
                         user_inputs[feature] = None
-                        
+
                 predict_button = st.button("Predict Production")
+
         # =========================
         # MAIN PAGE
         # =========================
@@ -380,20 +382,20 @@ elif nav == "ML Prediction":
             with st.container(key="mainpanel"):
 
                 st.subheader("Prediction Model Info")
-                st.write("Algorithm:",config["model"]["algorithm_pred"])
-                st.write("R square score:",config["model"]["r_square_score"])
-                st.write("RMSE:",config["model"]["rmse"])
-                st.write("Average CV Score:",config["model"]["avg_CV_score"])
+                st.write("Algorithm:", config["model"]["algorithm_pred"])
+                st.write("R square score:", config["model"]["r_square_score"])
+                st.write("RMSE:", config["model"]["rmse"])
+                st.write("Average CV Score:", config["model"]["avg_CV_score"])
 
                 result_placeholder = st.empty()
 
                 if predict_button:
-                     try:
+                    try:
 
                         if errors:
                             st.warning("Please correct invalid inputs.")
 
-                        elif None in user_inputs.values():
+                        elif any(v is None for v in user_inputs.values()):
                             st.warning("Please fill all fields.")
 
                         else:
@@ -409,9 +411,10 @@ elif nav == "ML Prediction":
                                 🌾 Food Insecurity Rate:<br><br>
                                 <b>{prediction:,.2f}</b>
                                 </div>
-                                 """,
+                                """,
                                 unsafe_allow_html=True
                             )
+
                     except ValueError:
                         result_placeholder.error("Invalid numeric input.")
 
@@ -420,46 +423,46 @@ elif nav == "ML Prediction":
 # =================================================
 elif nav == "ML Forecasting":
 
-        st.markdown("""
-    <style>
+    st.markdown("""
+<style>
 
-    /* MAIN DASHBOARD CONTAINER */
-    .st-key-main_container{
-        padding:30px;
-        border-radius:15px;
-        backdrop-filter: blur(6px);
-    }
+/* MAIN DASHBOARD CONTAINER */
+.st-key-main_container{
+    padding:30px;
+    border-radius:15px;
+    backdrop-filter: blur(6px);
+}
 
-    /* SIDEBAR PANEL */
-    .st-key-sidebar{
-        background-color:#062906;
-        padding:25px;
-        border-radius:12px;
-        min-height:450px;
-        color:white;
-    }
+/* SIDEBAR PANEL */
+.st-key-sidebar{
+    background-color:#062906;
+    padding:25px;
+    border-radius:12px;
+    min-height:450px;
+    color:white;
+}
 
-    /* MAIN CONTENT PANEL */
-    .st-key-mainpanel{
-        background-color:rgba(0,0,0,0);
-        padding:25px;
-        border-radius:12px;
-        min-height:450px;
-        color:white;
-    }
+/* MAIN CONTENT PANEL */
+.st-key-mainpanel{
+    background-color:rgba(0,0,0,0);
+    padding:25px;
+    border-radius:12px;
+    min-height:450px;
+    color:white;
+}
 
-    /* subtle card for results */
-    .result-card{
-        background:rgba(255,255,255,0.08);
-        padding:20px;
-        border-radius:12px;
-        border:1px solid rgba(255,255,255,0.15);
-        font-size:22px;
-        text-align:center;
-    }
+/* subtle card for results */
+.result-card{
+    background:rgba(255,255,255,0.08);
+    padding:20px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,0.15);
+    font-size:22px;
+    text-align:center;
+}
 
-    </style>
-    """, unsafe_allow_html=True)
+</style>
+""", unsafe_allow_html=True)
 
     set_background("https://64.media.tumblr.com/7e5be0b460f1404bfbf24807efa95f04/5bdfeadfc689526d-6d/s400x600/a87a377cee60d959ae9560c588ec691a2da470db.gif")
 
@@ -477,22 +480,22 @@ elif nav == "ML Forecasting":
 
                 st.image("https://i.pinimg.com/736x/40/f3/e6/40f3e6bd988eb9dfce39658b65b5c469.jpg")
 
-                countries = forecast_df["Country_orig"].unique()
+                countries = sorted(forecast_df["Country_orig"].unique())
+
                 st.markdown("""
-                  <style>
-                  /* Target the selectbox input area */
-                  div[data-baseweb="select"] > div {
-                  background-color: #c9ae85 !important;
-                  color: white !important;
-                  }
-                </style>
-                """, unsafe_allow_html=True)
-        
+<style>
+div[data-baseweb="select"] > div {
+background-color: #c9ae85 !important;
+color: white !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
                 country = st.selectbox("Select Country", countries)
                 future_year = st.slider("Forecast Year", 2024, 2035)
 
                 forecast_button = st.button("Generate Forecast")
-                
+
         # =========================
         # MAIN PANEL
         # =========================
@@ -501,15 +504,20 @@ elif nav == "ML Forecasting":
 
                 st.subheader("Forecasting Model Info")
 
-                st.write("Algorithm:",config["model"]["algorithm_forecast"])
-                st.write("MAE:",config["model"]["MAE"])
-                st.write("RMSE:",config["model"]["rmse_forecast"])
-                st.write("MAPE:",config["model"]["MAPE"])
+                st.write("Algorithm:", config["model"]["algorithm_forecast"])
+                st.write("MAE:", config["model"]["MAE"])
+                st.write("RMSE:", config["model"]["rmse_forecast"])
+                st.write("MAPE:", config["model"]["MAPE"])
 
                 result_placeholder = st.empty()
+
                 if forecast_button:
-        
+
                     country_data = forecast_df[forecast_df["Country_orig"] == country]
+
+                    if len(country_data) < 2:
+                        st.error("Not enough historical data for forecasting.")
+                        st.stop()
 
                     last_row = country_data.iloc[-1]
                     prev_row = country_data.iloc[-2]
@@ -540,6 +548,7 @@ elif nav == "ML Forecasting":
                         input_data[country_col] = 1
 
                     prediction = forecast_model.predict(input_data)[0]
+
                     st.subheader("Forecast Result")
 
                     st.success(
@@ -553,7 +562,7 @@ elif nav == "ML Forecasting":
                         "Food Insecurity Rate":[prediction]
                     })
 
-                    chart_df = pd.concat([chart_df,forecast_point])
+                    chart_df = pd.concat([chart_df, forecast_point])
 
                     fig = px.line(
                         chart_df,
