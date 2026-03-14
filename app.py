@@ -174,66 +174,92 @@ if nav == "Home":
 
 
 
-    # =====================================
-    # SECTION 2 : ABOUT PROJECT
-    # IMAGE + 40% DARK OVERLAY
-    # =====================================
-    st.markdown("""
-    <div style="
-        width:100vw;
-        margin-left:calc(-50vw + 50%);
-        background-image:
-        linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)),
-        url('https://static.vecteezy.com/system/resources/thumbnails/013/079/266/small_2x/circle-dot-south-east-asia-map-free-png.png');
-        background-color:#232423;
-        background-size:cover;
-        background-position:center;    
-    ">
+# =====================================
+# SECTION 2 : ABOUT PROJECT
+# IMAGE + 40% DARK OVERLAY
+# =====================================
+st.markdown("""
+<div style="
+    width:100vw;
+    margin-left:calc(-50vw + 50%);
+    background-image:
+    linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)),
+    url('https://static.vecteezy.com/system/resources/thumbnails/013/079/266/small_2x/circle-dot-south-east-asia-map-free-png.png');
+    background-color:#232423;
+    background-size:cover;
+    background-position:center;    
+">
 
-    <div style="
-        max-width:1000px;
-        margin:auto;
-        padding:80px 20px;
-        text-align:center;
-    ">
+<div style="
+    max-width:1100px;
+    margin:auto;
+    padding:80px 20px;
+">
 
-    <h2 style="text-align:center;color:white;">
-    About This Project
-    </h2>
+<div style="
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:40px;
+    flex-wrap:wrap;
+">
 
-    <br>
+<!-- LEFT SIDE : TEXT -->
+<div style="flex:1; min-width:300px; color:white;">
 
-    <p style="color:white;font-size:18px;text-align:center;max-width:900px;margin:auto;">
-    This project is an independent extension of my university group coursework on predicting
-    food insecurity in ASEAN countries using machine learning.
-    </p>
+<h2 style="color:white;">
+About This Project
+</h2>
 
-    <br>
+<br>
 
-    <p style="color:white;font-size:18px;text-align:center;max-width:900px;margin:auto;">
-    The original coursework focused on developing regression models using FAO and World Bank
-    indicators to predict the prevalence of severe food insecurity.
-    </p>
+<p style="font-size:18px;">
+This project is an independent extension of my university group coursework on predicting
+food insecurity in ASEAN countries using machine learning.
+</p>
 
-    <br>
+<br>
 
-    <p style="color:white;font-size:18px;text-align:center;max-width:900px;margin:auto;">
-    For my portfolio, I expanded the project into an interactive Food Security Monitoring
-    Dashboard by adding geographic visualization, time-series forecasting, and feature
-    importance analysis to support policy-oriented insights.
-    </p>
+<p style="font-size:18px;">
+The original coursework focused on developing regression models using FAO and World Bank
+indicators to predict the prevalence of severe food insecurity.
+</p>
 
-    <br>
+<br>
 
-    <p style="text-align:center;color:white;">
-    Data source:
-    <a href="https://data.worldbank.org/" target="_blank" style="color:#FFD700;">World Bank</a>
-    |
-    <a href="https://www.fao.org/faostat/en/#data" target="_blank" style="color:#FFD700;">FAO</a>
-    </p>
+<p style="font-size:18px;">
+For my portfolio, I expanded the project into an interactive Food Security Monitoring
+Dashboard by adding geographic visualization, time-series forecasting, and feature
+importance analysis to support policy-oriented insights.
+</p>
 
-    </div>
-    """, unsafe_allow_html=True)
+<br>
+
+<p>
+Data source:
+<a href="https://data.worldbank.org/" target="_blank" style="color:#FFD700;">World Bank</a>
+|
+<a href="https://www.fao.org/faostat/en/#data" target="_blank" style="color:#FFD700;">FAO</a>
+</p>
+
+</div>
+
+<!-- RIGHT SIDE : IMAGE -->
+<div style="flex:1; min-width:300px; text-align:center;">
+
+<img src="https://i.pinimg.com/736x/d9/a0/33/d9a03371e32af8ff16b489e50e912852.jpg"
+style="
+    width:320px;
+    border-radius:15px;
+    box-shadow:0px 6px 25px rgba(0,0,0,0.6);
+">
+
+</div>
+
+</div>
+</div>
+</div>
+""", unsafe_allow_html=True)
 
 
 
@@ -289,7 +315,7 @@ if nav == "Home":
 # =================================================
 elif nav == "Dashboard":
 
-    set_background("https://64.media.tumblr.com/7e5be0b460f1404bfbf24807efa95f04/5bdfeadfc689526d-6d/s400x600/a87a377cee60d959ae9560c588ec691a2da470db.gif")
+    set_background("https://i.pinimg.com/736x/74/7f/68/747f687d7596b24bb2c62a53f1f1f5c1.jpg")
 
     st.title("Food Security Dashboard")
     embed_tableau(TABLEAU_PATHS["Overview"])
@@ -311,7 +337,7 @@ elif nav == "ML Prediction":
 
 /* SIDEBAR PANEL */
 .st-key-sidebar{
-    background-color:#062906;
+    background-color:#4f2206;
     padding:25px;
     border-radius:12px;
     min-height:450px;
@@ -340,9 +366,9 @@ elif nav == "ML Prediction":
 </style>
 """, unsafe_allow_html=True)
 
-    set_background("https://64.media.tumblr.com/7e5be0b460f1404bfbf24807efa95f04/5bdfeadfc689526d-6d/s400x600/a87a377cee60d959ae9560c588ec691a2da470db.gif")
+    set_background("https://i.pinimg.com/736x/74/7f/68/747f687d7596b24bb2c62a53f1f1f5c1.jpg")
 
-    st.title("Food Insecurity Prediction")
+    st.title("🍚 Food Insecurity Prediction")
 
     with st.container(key="main_container"):
 
@@ -354,8 +380,8 @@ elif nav == "ML Prediction":
         with sidebar:
             with st.container(key="sidebar"):
 
-                st.image("https://i.pinimg.com/1200x/68/fd/7b/68fd7b646d8f0b18ab50204dd32c807f.jpg")
-                st.write("Fill details below to predict crop production")
+                st.image("https://i.pinimg.com/736x/f6/44/2c/f6442c7bc0e8c5c76c70d63dda6e65bb.jpg")
+                st.write("Fill details below to predict food insecurity")
 
                 user_inputs = {}
                 errors = False
@@ -435,7 +461,7 @@ elif nav == "ML Forecasting":
 
 /* SIDEBAR PANEL */
 .st-key-sidebar{
-    background-color:#062906;
+    background-color:#4f2206;
     padding:25px;
     border-radius:12px;
     min-height:450px;
@@ -464,9 +490,9 @@ elif nav == "ML Forecasting":
 </style>
 """, unsafe_allow_html=True)
 
-    set_background("https://64.media.tumblr.com/7e5be0b460f1404bfbf24807efa95f04/5bdfeadfc689526d-6d/s400x600/a87a377cee60d959ae9560c588ec691a2da470db.gif")
+    set_background("https://i.pinimg.com/736x/74/7f/68/747f687d7596b24bb2c62a53f1f1f5c1.jpg")
 
-    st.title("Food Insecurity Forecast")
+    st.title("📈 Food Insecurity Forecast")
 
     with st.container(key="main_container"):
 
@@ -477,9 +503,11 @@ elif nav == "ML Forecasting":
         # =========================
         with sidebar:
             with st.container(key="sidebar"):
+            
 
-                st.image("https://i.pinimg.com/736x/40/f3/e6/40f3e6bd988eb9dfce39658b65b5c469.jpg")
-
+                st.image("https://i.pinimg.com/736x/dc/e4/e8/dce4e86cb51475d4fc0771acd2c3bdc4.jpg")
+                st.write("Fill details below to forecast food insecurity rate")
+                
                 countries = sorted(forecast_df["Country_orig"].unique())
 
                 st.markdown("""
@@ -578,7 +606,7 @@ color: white !important;
 # =================================================
 elif nav == "Methodology":
 
-    set_background("https://i.pinimg.com/736x/83/94/88/839488e9fa9a3a7b5008ff12b35ad261.jpg")
+    set_background("https://i.pinimg.com/736x/74/7f/68/747f687d7596b24bb2c62a53f1f1f5c1.jpg")
 
     st.title("Project Methodology")
 
