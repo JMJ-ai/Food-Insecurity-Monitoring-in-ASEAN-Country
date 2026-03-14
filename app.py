@@ -174,92 +174,92 @@ if nav == "Home":
 
 
 
-# =====================================
-# SECTION 2 : ABOUT PROJECT
-# IMAGE + 40% DARK OVERLAY
-# =====================================
-st.markdown("""
-<div style="
-    width:100vw;
-    margin-left:calc(-50vw + 50%);
-    background-image:
-    linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)),
-    url('https://static.vecteezy.com/system/resources/thumbnails/013/079/266/small_2x/circle-dot-south-east-asia-map-free-png.png');
-    background-color:#232423;
-    background-size:cover;
-    background-position:center;    
-">
+    # =====================================
+    # SECTION 2 : ABOUT PROJECT
+    # IMAGE + 40% DARK OVERLAY
+    # =====================================
+    st.markdown("""
+    <div style="
+        width:100vw;
+        margin-left:calc(-50vw + 50%);
+        background-image:
+        linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)),
+        url('https://static.vecteezy.com/system/resources/thumbnails/013/079/266/small_2x/circle-dot-south-east-asia-map-free-png.png');
+        background-color:#232423;
+        background-size:cover;
+        background-position:center;    
+    ">
 
-<div style="
-    max-width:1100px;
-    margin:auto;
-    padding:80px 20px;
-">
+    <div style="
+        max-width:1100px;
+        margin:auto;
+        padding:80px 20px;
+    ">
 
-<div style="
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:40px;
-    flex-wrap:wrap;
-">
+    <div style="
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:40px;
+        flex-wrap:wrap;
+    ">
 
-<!-- LEFT SIDE : TEXT -->
-<div style="flex:1; min-width:300px; color:white;">
+    <!-- LEFT SIDE : TEXT -->
+    <div style="flex:1; min-width:300px; color:white;">
 
-<h2 style="color:white;">
-About This Project
-</h2>
+    <h2 style="color:white;">
+    About This Project
+    </h2>
 
-<br>
+    <br>
 
-<p style="font-size:18px;">
-This project is an independent extension of my university group coursework on predicting
-food insecurity in ASEAN countries using machine learning.
-</p>
+    <p style="font-size:18px;">
+    This project is an independent extension of my university group coursework on predicting
+    food insecurity in ASEAN countries using machine learning.
+    </p>
 
-<br>
+    <br>
 
-<p style="font-size:18px;">
-The original coursework focused on developing regression models using FAO and World Bank
-indicators to predict the prevalence of severe food insecurity.
-</p>
+    <p style="font-size:18px;">
+    The original coursework focused on developing regression models using FAO and World Bank
+    indicators to predict the prevalence of severe food insecurity.
+    </p>
 
-<br>
+    <br>
 
-<p style="font-size:18px;">
-For my portfolio, I expanded the project into an interactive Food Security Monitoring
-Dashboard by adding geographic visualization, time-series forecasting, and feature
-importance analysis to support policy-oriented insights.
-</p>
+    <p style="font-size:18px;">
+    For my portfolio, I expanded the project into an interactive Food Security Monitoring
+    Dashboard by adding geographic visualization, time-series forecasting, and feature
+    importance analysis to support policy-oriented insights.
+    </p>
 
-<br>
+    <br>
 
-<p>
-Data source:
-<a href="https://data.worldbank.org/" target="_blank" style="color:#FFD700;">World Bank</a>
-|
-<a href="https://www.fao.org/faostat/en/#data" target="_blank" style="color:#FFD700;">FAO</a>
-</p>
+    <p>
+    Data source:
+    <a href="https://data.worldbank.org/" target="_blank" style="color:#FFD700;">World Bank</a>
+    
+    <a href="https://www.fao.org/faostat/en/#data" target="_blank" style="color:#FFD700;">FAO</a>
+    </p>
 
-</div>
+    </div>
 
-<!-- RIGHT SIDE : IMAGE -->
-<div style="flex:1; min-width:300px; text-align:center;">
+    <!-- RIGHT SIDE : IMAGE -->
+    <div style="flex:1; min-width:300px; text-align:center;">
 
-<img src="https://i.pinimg.com/736x/d9/a0/33/d9a03371e32af8ff16b489e50e912852.jpg"
-style="
-    width:320px;
-    border-radius:15px;
-    box-shadow:0px 6px 25px rgba(0,0,0,0.6);
-">
+    <img src="https://i.pinimg.com/736x/d9/a0/33/d9a03371e32af8ff16b489e50e912852.jpg"
+    style="
+        width:320px;
+        border-radius:15px;
+        box-shadow:0px 6px 25px rgba(0,0,0,0.6);
+        ">
 
-</div>
+    </div>
 
-</div>
-</div>
-</div>
-""", unsafe_allow_html=True)
+    </div>
+    </div>
+    </div>
+    """, unsafe_allow_html=True)
 
 
 
