@@ -299,162 +299,270 @@ elif nav == "Dashboard":
 # =================================================
 elif nav == "ML Prediction":
 
+    st.markdown("""
+    <style>
+
+    /* MAIN DASHBOARD CONTAINER */
+    .st-key-main_container{
+        padding:30px;
+        border-radius:15px;
+        backdrop-filter: blur(6px);
+    }
+
+    /* SIDEBAR PANEL */
+    .st-key-sidebar{
+        background-color:#062906;
+        padding:25px;
+        border-radius:12px;
+        min-height:450px;
+        color:white;
+    }
+
+    /* MAIN CONTENT PANEL */
+    .st-key-mainpanel{
+        background-color:rgba(0,0,0,0);
+        padding:25px;
+        border-radius:12px;
+        min-height:450px;
+        color:white;
+    }
+
+    /* subtle card for results */
+    .result-card{
+        background:rgba(255,255,255,0.08);
+        padding:20px;
+        border-radius:12px;
+        border:1px solid rgba(255,255,255,0.15);
+        font-size:22px;
+        text-align:center;
+    }
+
+    </style>
+    """, unsafe_allow_html=True)
+
     set_background("https://64.media.tumblr.com/7e5be0b460f1404bfbf24807efa95f04/5bdfeadfc689526d-6d/s400x600/a87a377cee60d959ae9560c588ec691a2da470db.gif")
 
     st.title("Food Insecurity Prediction")
 
-    col1,col2 = st.columns(2)
+    with st.container(key="main_container"):
 
-    with col1:
-        
-        st.subheader("ℹ️ Prediction Model Info")
+        sidebar, main_page = st.columns([1,2])
 
-        st.write("Algorithm:",config["model"]["algorithm_pred"])
-        st.write("R square score:",config["model"]["r_square_score"])
-        st.write("RMSE:",config["model"]["rmse"])
-        st.write("Average CV Score:",config["model"]["avg_CV_score"])
-        
-        st.image(
-            "https://i.pinimg.com/originals/54/87/7b/54877bdc42b36295f73f554ff1461b1c.gif",
-            width=500
-        )
+        # =========================
+        # SIDEBAR
+        # =========================
+        with sidebar:
+            with st.container(key="sidebar"):
+            
+                st.image("https://i.pinimg.com/1200x/68/fd/7b/68fd7b646d8f0b18ab50204dd32c807f.jpg")
+                st.write("Fill details below to predict crop production")
+                user_inputs = {}
+                errors = False
 
-    with col2:
+                for feature in feature_columns:
 
-        st.subheader("✨ Prediction Tool")
+                    value = st.text_input(feature)
 
-        user_inputs = {}
-        errors = False
+                    if value != "":
+                        try:
+                            user_inputs[feature] = float(value)
+                        except ValueError:
+                            st.error(f"⚠️ '{feature}' must be numeric.")
+                            errors = True
+                    else:
+                        user_inputs[feature] = None
+                        
+                  predict_button = st.button("Predict Production")
+        # =========================
+        # MAIN PAGE
+        # =========================
+        with main_page:
+            with st.container(key="mainpanel"):
 
-        for feature in feature_columns:
+                st.subheader("Prediction Model Info")
+                st.write("Algorithm:",config["model"]["algorithm_pred"])
+                st.write("R square score:",config["model"]["r_square_score"])
+                st.write("RMSE:",config["model"]["rmse"])
+                st.write("Average CV Score:",config["model"]["avg_CV_score"])
 
-            value = st.text_input(feature)
+                result_placeholder = st.empty()
 
-            if value != "":
-                try:
-                    user_inputs[feature] = float(value)
-                except ValueError:
-                    st.error(f"⚠️ '{feature}' must be numeric.")
-                    errors = True
-            else:
-                user_inputs[feature] = None
+                if predict_button:
+                     try:
 
-        if st.button("Predict"):
+                        if errors:
+                            st.warning("Please correct invalid inputs.")
 
-            if errors:
-                st.warning("Please correct invalid inputs.")
+                        elif None in user_inputs.values():
+                            st.warning("Please fill all fields.")
 
-            elif None in user_inputs.values():
-                st.warning("Please fill all fields.")
+                        else:
 
-            else:
+                            input_df = pd.DataFrame([user_inputs])
+                            input_df = input_df[feature_columns]
 
-                input_df = pd.DataFrame([user_inputs])
-                input_df = input_df[feature_columns]
+                            prediction = prediction_model.predict(input_df)[0]
 
-                prediction = prediction_model.predict(input_df)[0]
-
-                st.success(
-                    f"Predicted Food Insecurity Rate: {prediction:.2f}"
-                )
+                            result_placeholder.markdown(
+                                f"""
+                                <div class="result-card">
+                                🌾 Food Insecurity Rate:<br><br>
+                                <b>{prediction:,.2f}</b>
+                                </div>
+                                 """,
+                                unsafe_allow_html=True
+                            )
+                        except ValueError:
+                        result_placeholder.error("Invalid numeric input.")
 
 # =================================================
 # ML FORECASTING
 # =================================================
 elif nav == "ML Forecasting":
 
+        st.markdown("""
+    <style>
+
+    /* MAIN DASHBOARD CONTAINER */
+    .st-key-main_container{
+        padding:30px;
+        border-radius:15px;
+        backdrop-filter: blur(6px);
+    }
+
+    /* SIDEBAR PANEL */
+    .st-key-sidebar{
+        background-color:#062906;
+        padding:25px;
+        border-radius:12px;
+        min-height:450px;
+        color:white;
+    }
+
+    /* MAIN CONTENT PANEL */
+    .st-key-mainpanel{
+        background-color:rgba(0,0,0,0);
+        padding:25px;
+        border-radius:12px;
+        min-height:450px;
+        color:white;
+    }
+
+    /* subtle card for results */
+    .result-card{
+        background:rgba(255,255,255,0.08);
+        padding:20px;
+        border-radius:12px;
+        border:1px solid rgba(255,255,255,0.15);
+        font-size:22px;
+        text-align:center;
+    }
+
+    </style>
+    """, unsafe_allow_html=True)
+
     set_background("https://64.media.tumblr.com/7e5be0b460f1404bfbf24807efa95f04/5bdfeadfc689526d-6d/s400x600/a87a377cee60d959ae9560c588ec691a2da470db.gif")
 
     st.title("Food Insecurity Forecast")
 
-    col1,col2 = st.columns(2)
+    with st.container(key="main_container"):
 
-    with col1:
+        sidebar, main_page = st.columns([1,2])
+
+        # =========================
+        # SIDEBAR
+        # =========================
+        with sidebar:
+            with st.container(key="sidebar"):
+
+                st.image("https://i.pinimg.com/736x/40/f3/e6/40f3e6bd988eb9dfce39658b65b5c469.jpg")
+
+                countries = forecast_df["Country_orig"].unique()
+                st.markdown("""
+                  <style>
+                  /* Target the selectbox input area */
+                  div[data-baseweb="select"] > div {
+                  background-color: #c9ae85 !important;
+                  color: white !important;
+                  }
+                </style>
+                """, unsafe_allow_html=True)
         
-        st.subheader("ℹ️ Forecasting Model Info")
-        st.write("Algorithm:",config["model"]["algorithm_forecast"])
-        st.write("MAE:",config["model"]["MAE"])
-        st.write("RMSE:",config["model"]["rmse_forecast"])
-        st.write("MAPE:",config["model"]["MAPE"])
+                country = st.selectbox("Select Country", countries)
+                future_year = st.slider("Forecast Year", 2024, 2035)
+
+                forecast_button = st.button("Generate Forecast")
+                
+        # =========================
+        # MAIN PANEL
+        # =========================
+        with main_page:
+            with st.container(key="mainpanel"):
+
+                st.subheader("Forecasting Model Info")
+
+                st.write("Algorithm:",config["model"]["algorithm_forecast"])
+                st.write("MAE:",config["model"]["MAE"])
+                st.write("RMSE:",config["model"]["rmse_forecast"])
+                st.write("MAPE:",config["model"]["MAPE"])
+
+                result_placeholder = st.empty()
+                if forecast_button:
         
-        st.image(
-            "https://i.pinimg.com/originals/7c/6e/ea/7c6eeaeb617ad2c17d567c7ff9621e17.gif",
-            width=500
-        )
+                    country_data = forecast_df[forecast_df["Country_orig"] == country]
 
-    with col2:
+                    last_row = country_data.iloc[-1]
+                    prev_row = country_data.iloc[-2]
 
-        st.subheader("✨ Forecast Tool")
+                    lag1 = last_row["Food Insecurity Rate"]
+                    lag2 = prev_row["Food Insecurity Rate"]
 
-        countries = forecast_df["Country_orig"].unique()
-        st.markdown("""
-          <style>
-          /* Target the selectbox input area */
-          div[data-baseweb="select"] > div {
-          background-color: #c9ae85 !important;
-          color: white !important;
-          }
-        </style>
-        """, unsafe_allow_html=True)
-        
-        country = st.selectbox("Select Country", countries)
-        future_year = st.slider("Forecast Year", 2024, 2035)
+                    water_lag1 = last_row["water access"]
+                    water_lag2 = prev_row["water access"]
 
-        country_data = forecast_df[forecast_df["Country_orig"] == country]
+                    rolling_mean = country_data["Food Insecurity Rate"].tail(3).mean()
 
-        last_row = country_data.iloc[-1]
-        prev_row = country_data.iloc[-2]
+                    time_index = future_year - forecast_df["Year"].min()
 
-        lag1 = last_row["Food Insecurity Rate"]
-        lag2 = prev_row["Food Insecurity Rate"]
+                    input_data = pd.DataFrame(0, index=[0], columns=forecast_features)
 
-        water_lag1 = last_row["water access"]
-        water_lag2 = prev_row["water access"]
+                    input_data["Food Insecurity Rate_lag1"] = lag1
+                    input_data["Food Insecurity Rate_lag2"] = lag2
+                    input_data["water access_lag1"] = water_lag1
+                    input_data["water access_lag2"] = water_lag2
+                    input_data["food_insecurity_roll3"] = rolling_mean
+                    input_data["time_index"] = time_index
+                    input_data["water access"] = last_row["water access"]
 
-        rolling_mean = country_data["Food Insecurity Rate"].tail(3).mean()
+                    country_col = f"Country_orig_{country}"
 
-        time_index = future_year - forecast_df["Year"].min()
+                    if country_col in input_data.columns:
+                        input_data[country_col] = 1
 
-        input_data = pd.DataFrame(0, index=[0], columns=forecast_features)
+                    prediction = forecast_model.predict(input_data)[0]
+                    st.subheader("Forecast Result")
 
-        input_data["Food Insecurity Rate_lag1"] = lag1
-        input_data["Food Insecurity Rate_lag2"] = lag2
-        input_data["water access_lag1"] = water_lag1
-        input_data["water access_lag2"] = water_lag2
-        input_data["food_insecurity_roll3"] = rolling_mean
-        input_data["time_index"] = time_index
-        input_data["water access"] = last_row["water access"]
+                    st.success(
+                        f"Forecast Food Insecurity Rate: {prediction:.2f}"
+                    )
 
-        country_col = f"Country_orig_{country}"
+                    chart_df = country_data[["Year","Food Insecurity Rate"]].copy()
 
-        if country_col in input_data.columns:
-            input_data[country_col] = 1
+                    forecast_point = pd.DataFrame({
+                        "Year":[future_year],
+                        "Food Insecurity Rate":[prediction]
+                    })
 
-        if st.button("Generate Forecast"):
+                    chart_df = pd.concat([chart_df,forecast_point])
 
-            prediction = forecast_model.predict(input_data)[0]
+                    fig = px.line(
+                        chart_df,
+                        x="Year",
+                        y="Food Insecurity Rate",
+                        title=f"{country} Forecast"
+                    )
 
-            st.success(
-                f"Forecast Food Insecurity Rate: {prediction:.2f}"
-            )
-
-            chart_df = country_data[["Year","Food Insecurity Rate"]].copy()
-
-            forecast_point = pd.DataFrame({
-                "Year":[future_year],
-                "Food Insecurity Rate":[prediction]
-            })
-
-            chart_df = pd.concat([chart_df,forecast_point])
-
-            fig = px.line(
-                chart_df,
-                x="Year",
-                y="Food Insecurity Rate",
-                title=f"{country} Forecast"
-            )
-
-            st.plotly_chart(fig)
+                    st.plotly_chart(fig)
 
 # =================================================
 # METHODOLOGY
