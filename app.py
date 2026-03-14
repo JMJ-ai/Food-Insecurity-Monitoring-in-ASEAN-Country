@@ -249,7 +249,7 @@ if nav == "Home":
 
     <img src="https://i.pinimg.com/736x/d9/a0/33/d9a03371e32af8ff16b489e50e912852.jpg"
     style="
-        width:320px;
+        width:670px;
         border-radius:15px;
         box-shadow:0px 6px 25px rgba(0,0,0,0.6);
         ">
@@ -315,7 +315,7 @@ if nav == "Home":
 # =================================================
 elif nav == "Dashboard":
 
-    set_background("https://i.pinimg.com/736x/74/7f/68/747f687d7596b24bb2c62a53f1f1f5c1.jpg")
+    set_background("https://i.pinimg.com/736x/7f/3c/0f/7f3c0fbd2756a4071aa3261ad27118e8.jpg")
 
     st.title("Food Security Dashboard")
     embed_tableau(TABLEAU_PATHS["Overview"])
@@ -366,7 +366,7 @@ elif nav == "ML Prediction":
 </style>
 """, unsafe_allow_html=True)
 
-    set_background("https://i.pinimg.com/736x/74/7f/68/747f687d7596b24bb2c62a53f1f1f5c1.jpg")
+    set_background("https://i.pinimg.com/736x/7f/3c/0f/7f3c0fbd2756a4071aa3261ad27118e8.jpg")
 
     st.title("🍚 Food Insecurity Prediction")
 
@@ -490,7 +490,7 @@ elif nav == "ML Forecasting":
 </style>
 """, unsafe_allow_html=True)
 
-    set_background("https://i.pinimg.com/736x/74/7f/68/747f687d7596b24bb2c62a53f1f1f5c1.jpg")
+    set_background("https://i.pinimg.com/736x/7f/3c/0f/7f3c0fbd2756a4071aa3261ad27118e8.jpg")
 
     st.title("📈 Food Insecurity Forecast")
 
@@ -606,7 +606,7 @@ color: white !important;
 # =================================================
 elif nav == "Methodology":
 
-    set_background("https://i.pinimg.com/736x/74/7f/68/747f687d7596b24bb2c62a53f1f1f5c1.jpg")
+    set_background("https://i.pinimg.com/736x/7f/3c/0f/7f3c0fbd2756a4071aa3261ad27118e8.jpg")
 
     st.title("Project Methodology")
 
