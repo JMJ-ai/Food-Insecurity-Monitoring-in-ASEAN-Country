@@ -180,12 +180,15 @@ if nav == "Home":
             background-color:transparent;
             color:black;
             padding:15px 30px;
-            border:none;
+            border:2px solid black;
             border-radius:8px;
             font-size:16px;
             margin-right:20px;
             cursor:pointer;
-        ">
+        "
+        onmouseover="this.style.background='black'; this.style.color='white'"
+        onmouseout="this.style.background='transparent'; this.style.color='black'"
+        >
         About Project
         </button>
     </a>
